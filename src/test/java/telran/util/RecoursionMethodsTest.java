@@ -35,7 +35,7 @@ public class RecoursionMethodsTest {
         assertEquals(25, square(5));
         assertEquals(100, square(10));
         assertEquals(100, square(-10));
-        assertEquals(1, square(0));
+        assertEquals(0, square(0));
     }
 
     @Test

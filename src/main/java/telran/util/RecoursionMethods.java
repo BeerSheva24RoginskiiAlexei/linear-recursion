@@ -27,21 +27,7 @@ public class RecoursionMethods {
         if (degree < 0) {
             throw new IllegalArgumentException();
         }
-        return powRecursive(num, degree);
-    }
-    
-    private static long powRecursive(int num, int degree) {
-        return (degree == 0) ? 1 : (degree == 1) ? num : multiply(num, powRecursive(num, degree - 1));
-    }
-    
-    private static long multiply(long a, long b) {
-        long result = (b == 0) ? 0 : (b > 0) ? add(a, multiply(a, b - 1)) : -multiply(a, -b);
-        return result;
-    }
-    
-    private static long add(long a, long b) {
-        long result = (b == 0) ? a : (b > 0) ? add(a + 1, b - 1) : add(a - 1, b + 1);
-        return result;
+        return degree == 0 ? 1 : num * pow(num, degree - 1);
     }
 
 
@@ -63,12 +49,9 @@ public class RecoursionMethods {
      * 5. no additional fields of the class RecursionMethods are allowed
      */
     public static int square(int x) {
-        x = (x < 0) ? -x : x; 
-        long result = multiply(x, x); 
-        return (x == 0) ? 1 : (int) result; 
+        x = x < 0 ? -x : x;
+        return  x == 0 ? 0 : x + x - 1 + square(x - 1);
     }
-
-
 
     /**
      * 
@@ -83,20 +66,16 @@ public class RecoursionMethods {
      *     2.3 substring(int beginIndex)
      */
     public static boolean isSubstring(String string, String subString) {
-        return isSubstringRecursive(string, subString, 0, 0) || subString.length() == 0;
+        return isSubstringRecursive(string, subString, 0, 0);
     }
-    
+
     private static boolean isSubstringRecursive(String string, String subString, int indexString, int indexSubString) {
         boolean isMatch = indexSubString == subString.length();
         boolean reachedEnd = indexString == string.length();
         
-        if (isMatch || reachedEnd) {
-            return isMatch;
-        }
-        
-        boolean matches = string.charAt(indexString) == subString.charAt(indexSubString);
-        return matches
-            ? isSubstringRecursive(string, subString, indexString + 1, indexSubString + 1)
-            : isSubstringRecursive(string, subString, indexString - indexSubString + 1, 0);
+        return isMatch || (!reachedEnd && 
+                (string.charAt(indexString) == subString.charAt(indexSubString) 
+                ? isSubstringRecursive(string, subString, indexString + 1, indexSubString + 1) 
+                : isSubstringRecursive(string, subString, indexString - indexSubString + 1, 0)));
     }
 }
