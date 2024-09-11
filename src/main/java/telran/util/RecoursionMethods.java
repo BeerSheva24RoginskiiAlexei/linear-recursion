@@ -27,7 +27,15 @@ public class RecoursionMethods {
         if (degree < 0) {
             throw new IllegalArgumentException();
         }
-        return degree == 0 ? 1 : num * pow(num, degree - 1);
+        return degree == 0 ? 1 : degree == 1 ? num : multiply(num, pow(num, degree - 1));
+    }
+
+    private static long multiply(long a, long b) {
+        return b == 0 ? 0 : (b > 0 ? add(a, multiply(a, b - 1)) : -multiply(a, -b));
+    }
+
+    private static long add(long a, long b) {
+        return b == 0 ? a : (b > 0 ? add(a + 1, b - 1) : add(a - 1, b + 1));
     }
 
 
